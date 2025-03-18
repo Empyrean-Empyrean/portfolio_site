@@ -67,7 +67,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio_site.wsgi.application'
 
-MySQL DATABASE
+# MySQL DATABASE
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
