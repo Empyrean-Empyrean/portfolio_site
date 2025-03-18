@@ -1,0 +1,74 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}{{ project.name }} | My Portfolio{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'projects/css/projects_styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<article class="project-detail" data-aos="fade-up">
+  <header>
+    <h1>{{ project.name }}</h1>
+  </header>
+  {% if project.thumbnail %}
+    <img src="{{ project.thumbnail.url }}" alt="{{ project.name }}" class="thumbnail">
+  {% endif %}
+  <section class="project-info">
+    <p><strong>Main Technology:</strong> {{ project.main_technology }}</p>
+    <p>
+      <strong>Technologies:</strong>
+      {% for tech in project.technologies.all %}
+        {{ tech.name }}{% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+    <h2>Explanation</h2>
+    <p>{{ project.explanation }}</p>
+    <h2>Code Snippet</h2>
+    <pre>{{ project.code_snippet }}</pre>
+    <h2>Other Information</h2>
+    <p>{{ project.other_info }}</p>
+  </section>
+</article>
+
+<section class="comments-section" data-aos="fade-up" data-aos-delay="150">
+  <h2>Comments</h2>
+  {% if user.is_authenticated %}
+    <form action="{% url 'comments:add_comment' project.content_type.id project.id %}" method="POST">
+      {% csrf_token %}
+      <textarea name="comment_text" rows="3" placeholder="Add a comment..."></textarea>
+      <button type="submit" class="cta-btn">Submit Comment</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'account_login' %}">Login</a> to comment.</p>
+  {% endif %}
+  
+  <div class="comments-thread">
+    {% for comment in project.comment_set.all %}
+      {% if not comment.parent %}
+        <div class="comment" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'100' }}">
+          <p><strong>{{ comment.user.username }}</strong> said:</p>
+          <p>{{ comment.text }}</p>
+          <p class="timestamp">{{ comment.created_at|date:"M d, Y H:i" }}</p>
+          {% if user.is_authenticated %}
+            <form action="{% url 'comments:reply_comment' comment.id %}" method="POST">
+              {% csrf_token %}
+              <textarea name="reply_text" rows="2" placeholder="Reply..."></textarea>
+              <button type="submit" class="cta-btn">Reply</button>
+            </form>
+          {% endif %}
+          {% for reply in comment.replies.all %}
+            <div class="comment reply" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'150' }}">
+              <p><strong>{{ reply.user.username }}</strong> replied:</p>
+              <p>{{ reply.text }}</p>
+              <p class="timestamp">{{ reply.created_at|date:"M d, Y H:i" }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% empty %}
+      <p>No comments yet. Be the first to comment!</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+Django>=5.1.6
+django-allauth
+djangorestframework
+mysqlclient
+django-cors-headers
+pillow
+gunicorn
+whitenoise
+celery
+redis
+numpy
+pandas
+scikit-learn
+tensorflow
+torch
+jwt

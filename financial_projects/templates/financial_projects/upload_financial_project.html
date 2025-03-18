@@ -1,0 +1,96 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Upload Financial Project | My Portfolio{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'financial_projects/css/financial_styles.css' %}">
+  <style>
+    .upload-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;  /* Symmetric padding on all sides */
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+    }
+    .upload-container h1 {
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-size: 2rem;
+      color: var(--dark);
+    }
+    .upload-container form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    .upload-container form input[type="text"],
+    .upload-container form textarea,
+    .upload-container form input[type="file"],
+    .upload-container form select {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.3rem;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .upload-container form button {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 0.3rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-sizing: border-box;
+    }
+    .upload-container form button:hover {
+      background-color: var(--primary-dark);
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<section class="container" data-aos="fade-up">
+  <div class="upload-container">
+    <h1>Upload Financial Project</h1>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <label for="id_name">Project Name:</label>
+      {{ form.name }}
+
+      <label for="id_slug">Slug:</label>
+      {{ form.slug }}
+
+      <label for="id_main_technology">Main Technology:</label>
+      {{ form.main_technology }}
+
+      <label for="id_technologies">Select Existing Technologies:</label>
+      {{ form.technologies }}
+
+      <label for="id_new_technologies">Other Technologies (comma-separated):</label>
+      {{ form.new_technologies }}
+
+      <label for="id_explanation">Explanation:</label>
+      {{ form.explanation }}
+
+      <label for="id_code_snippet">Code Snippet:</label>
+      {{ form.code_snippet }}
+
+      <label for="id_other_info">Other Information:</label>
+      {{ form.other_info }}
+
+      <label for="id_thumbnail">Thumbnail:</label>
+      {{ form.thumbnail }}
+
+      <button type="submit">Upload Financial Project</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Blogs | My Portfolio{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'blogs/css/blogs_styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="container" data-aos="fade-up">
+  <header class="section-header">
+    <h1 class="section-title"><i class="fas fa-blog section-icon"></i> Blogs</h1>
+    <form method="GET" class="search-form">
+      <input type="text" name="search" placeholder="Search Blogs" value="{{ search_query }}">
+      <button type="submit"><i class="fas fa-search"></i></button>
+    </form>
+  </header>
+  <div class="preview-container">
+    {% for blog in page_obj %}
+    <article class="blog-card" data-aos="zoom-in" data-aos-delay="{{ forloop.counter|add:'100' }}">
+      {% if blog.thumbnail %}
+        <img src="{{ blog.thumbnail.url }}" alt="{{ blog.title }}" class="thumbnail">
+      {% else %}
+        <div class="thumbnail-placeholder">No Image</div>
+      {% endif %}
+      <div class="card-content">
+        <h2>{{ blog.title }}</h2>
+        <p>{{ blog.excerpt }}</p>
+        <a href="{{ blog.get_absolute_url }}" class="view-all-btn">Read More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </article>
+    {% empty %}
+      <p>No blogs found.</p>
+    {% endfor %}
+  </div>
+  <div class="pagination">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Previous</a>
+      {% endif %}
+      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Next</a>
+      {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<div class="dashboard-container">
+    <h2>Admin Dashboard</h2>
+
+    <h3>Projects</h3>
+    <table class="dashboard-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>{{ project.title }}</td>
+                <td>
+                    <a href="{% url 'dashboard:delete_project' project.pk %}" class="delete-btn">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Blogs</h3>
+    <table class="dashboard-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for blog in blogs %}
+            <tr>
+                <td>{{ blog.title }}</td>
+                <td>
+                    <a href="{% url 'dashboard:delete_blog' blog.pk %}" class="delete-btn">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

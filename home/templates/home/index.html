@@ -1,0 +1,427 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Home | My Portfolio{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* Hero section animations and styling */
+  .hero-section {
+    position: relative;
+    text-align: center;
+    padding: 6rem 2rem;
+    overflow: hidden;
+    border-radius: 1rem;
+    margin-bottom: 3rem;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+  }
+  
+  .hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('{% static "home/images/grid-pattern.svg" %}') center/cover;
+    opacity: 0.1;
+    z-index: -1;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .hero-title::after {
+    content: "";
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+  }
+  
+  .skills-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  
+  .skill-badge {
+    background-color: white;
+    color: var(--dark);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .skill-badge:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary);
+    color: white;
+  }
+  
+  /* Featured sections */
+  .featured-section {
+    margin-bottom: 4rem;
+    position: relative;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    overflow: hidden;
+  }
+  
+  .featured-section:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+  }
+  
+  .featured-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary), var(--secondary));
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+    color: var(--dark);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  
+  .section-icon {
+    font-size: 1.3rem;
+    color: var(--primary);
+  }
+  
+  .view-all-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.2rem;
+    background-color: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 2rem;
+    font-weight: 500;
+    transition: var(--transition);
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .view-all-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: 0.5s;
+  }
+  
+  .view-all-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .view-all-btn:hover::before {
+    left: 100%;
+  }
+  
+  /* Preview items */
+  .preview-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .preview-placeholder {
+    background-color: white;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    position: relative;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .preview-placeholder:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .preview-placeholder::after {
+    content: "Coming Soon";
+    position: absolute;
+    font-weight: 500;
+    color: var(--dark);
+    opacity: 0.7;
+  }
+  
+  .preview-placeholder::before {
+    content: "";
+    width: 80%;
+    height: 70%;
+    position: absolute;
+    background: linear-gradient(135deg, #f1f5f9 25%, transparent 25%, transparent 50%, #f1f5f9 50%, #f1f5f9 75%, transparent 75%, transparent);
+    background-size: 20px 20px;
+    opacity: 0.5;
+    animation: shimmer 2s infinite linear;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 40px 40px;
+    }
+  }
+  
+  /* Call to action */
+  .cta-section {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 1rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    margin-top: 4rem;
+  }
+  
+  .cta-section::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.05) 15px,
+      transparent 15px,
+      transparent 30px
+    );
+    top: -50%;
+    left: -50%;
+    animation: moveBackground 30s linear infinite;
+    z-index: 1;
+  }
+  
+  @keyframes moveBackground {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .cta-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .cta-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cta-text {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    opacity: 0.9;
+  }
+  
+  .cta-btn {
+    background-color: white;
+    color: var(--primary);
+    text-decoration: none;
+    padding: 0.8rem 2rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    transition: var(--transition);
+    display: inline-block;
+  }
+  
+  .cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+    
+    .preview-container {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    
+    .featured-section {
+      padding: 1.5rem;
+    }
+    
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" data-aos="fade-up">
+  <h1 class="hero-title">{{ welcome_message }}</h1>
+  <p class="hero-subtitle">I specialize in Data Science, Deep Learning, and building robust Django applications with a focus on creating impactful solutions to complex problems.</p>
+  
+  <div class="skills-container">
+    <div class="skill-badge"><i class="fas fa-chart-line"></i> Data Science</div>
+    <div class="skill-badge"><i class="fas fa-brain"></i> Deep Learning</div>
+    <div class="skill-badge"><i class="fas fa-code"></i> Django</div>
+    <div class="skill-badge"><i class="fas fa-database"></i> SQL</div>
+    <div class="skill-badge"><i class="fab fa-python"></i> Python</div>
+    <div class="skill-badge"><i class="fas fa-laptop-code"></i> Web Development</div>
+  </div>
+</section>
+
+<!-- Projects Section -->
+<section class="featured-section" data-aos="fade-up" data-aos-delay="100">
+  <div class="section-header">
+    <h2 class="section-title"><i class="fas fa-code section-icon"></i> Prized Projects</h2>
+    <a href="{% url 'projects:project_list' %}" class="view-all-btn">
+      View All Projects <i class="fas fa-arrow-right"></i>
+    </a>
+  </div>
+  
+  <!-- Project Previews (placeholders until you have actual projects data) -->
+  <div class="preview-container">
+    <div class="preview-placeholder" data-aos="zoom-in" data-aos-delay="150"></div>
+    <div class="preview-placeholder" data-aos="zoom-in" data-aos-delay="200"></div>
+    <div class="preview-placeholder" data-aos="zoom-in" data-aos-delay="250"></div>
+  </div>
+</section>
+
+<!-- Financial Projects Section -->
+<section class="featured-section" data-aos="fade-up" data-aos-delay="150">
+  <div class="section-header">
+    <h2 class="section-title"><i class="fas fa-chart-pie section-icon"></i> Prized Financial Projects</h2>
+    <a href="{% url 'financial_projects:financial_list' %}" class="view-all-btn">
+      View Financial Projects <i class="fas fa-arrow-right"></i>
+    </a>
+  </div>
+  
+  <!-- Financial Project Previews -->
+  <div class="preview-container">
+    <div class="preview-placeholder" data-aos="zoom-in" data-aos-delay="150"></div>
+    <div class="preview-placeholder" data-aos="zoom-in" data-aos-delay="200"></div>
+  </div>
+</section>
+
+<!-- Latest Blogs Section -->
+<section class="featured-section" data-aos="fade-up" data-aos-delay="200">
+  <div class="section-header">
+    <h2 class="section-title"><i class="fas fa-pen-fancy section-icon"></i> Latest Blogs</h2>
+    <a href="{% url 'blogs:blog_list' %}" class="view-all-btn">
+      View Blogs <i class="fas fa-arrow-right"></i>
+    </a>
+  </div>
+  
+  <!-- Blog Previews -->
+  <div class="preview-container">
+    <div class="preview-placeholder" data-aos="zoom-in" data-aos-delay="150"></div>
+    <div class="preview-placeholder" data-aos="zoom-in" data-aos-delay="200"></div>
+    <div class="preview-placeholder" data-aos="zoom-in" data-aos-delay="250"></div>
+  </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section" data-aos="fade-up" data-aos-delay="250">
+  <div class="cta-content">
+    <h2 class="cta-title">Let's Work Together</h2>
+    <p class="cta-text">Have a project in mind or looking for a collaborative opportunity? I'm always open to discussing new possibilities.</p>
+    <a href="#" class="cta-btn">Get In Touch</a>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // You might need to create this SVG dynamically
+  if (!document.querySelector('img[src*="grid-pattern.svg"]')) {
+    const svgPattern = `
+      <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3" />
+          </pattern>
+        </defs>
+        <rect width="100" height="100" fill="url(#grid)" />
+      </svg>
+    `;
+    
+    // Create a blob and URL for the SVG
+    const blob = new Blob([svgPattern], {type: 'image/svg+xml'});
+    const url = URL.createObjectURL(blob);
+    
+    // Store the URL in localStorage so it persists between page loads
+    localStorage.setItem('gridPatternSvg', url);
+    
+    // Use the URL where needed
+    document.querySelector('.hero-section').style.setProperty('--grid-pattern', `url(${url})`);
+  }
+</script>
+{% endblock %}

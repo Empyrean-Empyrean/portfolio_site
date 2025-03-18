@@ -1,0 +1,84 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Upload Blog | My Portfolio{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'blogs/css/blogs_styles.css' %}">
+  <style>
+    .upload-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+    }
+    .upload-container h1 {
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-size: 2rem;
+      color: var(--dark);
+    }
+    .upload-container form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    .upload-container form input[type="text"],
+    .upload-container form textarea,
+    .upload-container form input[type="file"],
+    .upload-container form select {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.3rem;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .upload-container form button {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 0.3rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-sizing: border-box;
+    }
+    .upload-container form button:hover {
+      background-color: var(--primary-dark);
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<section class="container" data-aos="fade-up">
+  <div class="upload-container">
+    <h1>Upload Blog</h1>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <label for="id_title">Title:</label>
+      {{ form.title }}
+
+      <label for="id_slug">Slug:</label>
+      {{ form.slug }}
+
+      <label for="id_excerpt">Excerpt:</label>
+      {{ form.excerpt }}
+
+      <label for="id_content">Content:</label>
+      {{ form.content }}
+
+      <label for="id_thumbnail">Thumbnail:</label>
+      {{ form.thumbnail }}
+
+      <button type="submit">Upload Blog</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

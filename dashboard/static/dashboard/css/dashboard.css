@@ -1,0 +1,53 @@
+.dashboard-container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.dashboard-table th, .dashboard-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.dashboard-table th {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+}
+
+.project-link, .blog-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.project-link:hover, .blog-link:hover {
+    text-decoration: underline;
+}
+
+.action-cell {
+    text-align: right;
+}
+
+.delete-btn {
+    color: white;
+    background-color: red;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: darkred;
+}
