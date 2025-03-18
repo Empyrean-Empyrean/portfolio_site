@@ -67,27 +67,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio_site.wsgi.application'
 
-# MySQL DATABASE
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'portfoliodb',  # Replace with your database name
-#         'USER': 'admin',               # Your MySQL username
-#         'PASSWORD': 'Sridhar#2104',    # Your MySQL password
-#         'HOST': 'portfoliodb.c38smsaqe0x9.ap-south-1.rds.amazonaws.com',
-#         'PORT': '3306',
-#     }
-# }
+MySQL DATABASE
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'portfolio_db',  # Replace with your database name
-        'USER': 'root',               # Your MySQL username
-        'PASSWORD': 'Sridhar@2104',    # Your MySQL password
-        'HOST': 'localhost', 
+        'NAME': 'portfoliodb',  # Replace with your database name
+        'USER': 'admin',               # Your MySQL username
+        'PASSWORD': 'Sridhar#2104',    # Your MySQL password
+        'HOST': 'portfoliodb.c38smsaqe0x9.ap-south-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'portfolio_db',  # Replace with your database name
+#         'USER': 'root',               # Your MySQL username
+#         'PASSWORD': 'Sridhar@2104',    # Your MySQL password
+#         'HOST': 'localhost', 
+#         'PORT': '3306',
+#     }
+# }
 
 
 
